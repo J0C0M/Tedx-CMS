@@ -1,20 +1,23 @@
-const netlifyPlugin = require('preact-cli-plugin-netlify');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
-const imageminMozjpeg = require('imagemin-mozjpeg');
+import netlifyPlugin from 'preact-cli-plugin-netlify';
+import ImageminPlugin from 'imagemin-webpack-plugin';
+import imageminWebp from 'imagemin-webp';
 
-module.exports = (config, env) => {
+export default (config, env) => {
 	netlifyPlugin(config);
-	env.production && !env.ssr && config.plugins.push(new ImageminPlugin({
-		from: './build/assets/**',
-		pngquant: {
-			quality: '60'
-		},
-		plugins: [
-			imageminMozjpeg({
-				quality: 50,
-				progressive: true
-			})
-		]
-	}));
+
+	if (env.production && !env.ssr) {
+		config.plugins.push(new ImageminPlugin.default({
+			from: './build/assets/**',
+			pngquant: {
+				quality: '60'
+			},
+			plugins: [
+				imageminWebp({
+					quality: 50
+				})
+			]
+		}));
+	}
+
 	return config;
 };
