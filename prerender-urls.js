@@ -28,7 +28,8 @@ module.exports = () => {
 		if (blog.format === 'md') {
 			const { content } = parseMD(fs.readFileSync(join('content', 'blog', blog.id), 'utf-8'));
 			data = content;
-		} else {
+		}
+		else {
 			data = fs.readFileSync(join('content', 'blog', blog.id), 'utf-8').replace(/---(.*(\r)?\n)*---/, '');
 		}
 		return {
