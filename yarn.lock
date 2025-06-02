@@ -1568,11 +1568,6 @@
     kleur "^4.1.4"
     loader-utils "^2.0.0"
 
-"@preact/prerender-data-provider@^1.0.0":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@preact/prerender-data-provider/-/prerender-data-provider-3.0.1.tgz#89c9e5a53ed06b740f14da4a977d56dd9ad01bf7"
-  integrity sha512-Jox3VU2k4S/J0QL+tdRdnvZ7Cv/41cfWPWd7Xj8ZKqNZK85R7/UbsKIyvJHYI+YfBdR9MrDES+kjzzClkS8pHA==
-
 "@prefresh/babel-plugin@^0.4.1":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@prefresh/babel-plugin/-/babel-plugin-0.4.4.tgz#54872f9f938d3adff587037ab987c5e6449bdfee"
