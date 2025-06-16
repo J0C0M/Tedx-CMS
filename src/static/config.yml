@@ -6,7 +6,7 @@ public_folder: /assets
 collections:
   - name: "pages"
     label: "Pages"
-    label_singular: "Page" # Used in the UI, ie: "New Post"
+    label_singular: "Page"
     folder: "content/blog"
     create: true
     fields:
@@ -17,3 +17,18 @@ collections:
       - { label: "Tags", name: "tags", widget: "string" }
       - { label: "Body", name: "body", widget: "markdown"}
 
+  - name: "speakers"
+    label: "Speakers"
+    label_singular: "Speaker"
+    folder: "content/speakers"
+    create: true
+    fields:
+      - { label: "Name", name: "name", widget: "string"}
+      - { label: "Title/Position", name: "title", widget: "string"}
+      - { label: "Company/Organization", name: "company", widget: "string", required: false}
+      - { label: "Photo", name: "photo", widget: "image"}
+      - { label: "Bio", name: "bio", widget: "text"}
+      - { label: "Talk Title", name: "talk_title", widget: "string"}
+      - { label: "Talk Description", name: "talk_description", widget: "text"}
+      - { label: "Featured", name: "featured", widget: "boolean", default: false}
+      - { label: "Order", name: "order", widget: "number", default: 0}

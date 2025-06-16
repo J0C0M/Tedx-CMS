@@ -5,6 +5,7 @@ import Header from './header';
 
 // Code-splitting is automated for routes
 import Home from '../routes/home';
+import Speakers from '../routes/speakers';
 import Blogs from '../routes/blogs';
 import Blog from '../routes/blog';
 import Contact from '../routes/contact';
@@ -26,14 +27,17 @@ export default class App extends Component {
 			<Provider value={props}>
 				<div id="app">
 					<Header />
-					<Router onChange={this.handleRoute}>
-						<Home path="/" />
-						<Blogs path="/blogs/" />
-						<Blog path="/blog/:name" />
-						<Contact path="/contact/" />
-						<ContactSuccess path="/contact/success" />
-						<NotFoundPage type="404" default />
-					</Router>
+					<main style="padding-top: 80px;">
+						<Router onChange={this.handleRoute}>
+							<Home path="/" />
+							<Speakers path="/speakers/" />
+							<Blogs path="/blogs/" />
+							<Blog path="/blog/:name" />
+							<Contact path="/contact/" />
+							<ContactSuccess path="/contact/success" />
+							<NotFoundPage type="404" default />
+						</Router>
+					</main>
 				</div>
 			</Provider>
 		);

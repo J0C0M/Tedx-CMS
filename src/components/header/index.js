@@ -4,11 +4,18 @@ import style from './style';
 
 const Header = () => (
 	<header class={style.header}>
-		<Link href="/"><h1>Jane Doe</h1></Link>
-		<nav>
-			<Link activeClassName={style.active} href="/blogs">Blogs</Link>
-			<Link activeClassName={style.active} href="/contact">Contact me</Link>
-		</nav>
+		<div class={style.container}>
+			<Link href="/" class={style.logo}>
+				<span class={style.tedx}>TEDx</span>
+				<span class={style.roc}>ROC Nijmegen</span>
+			</Link>
+			<nav class={style.nav}>
+				<Link activeClassName={style.active} href="/">Home</Link>
+				<Link activeClassName={style.active} href="/speakers">Speakers</Link>
+				<Link activeClassName={style.active} href="/blogs">Blog</Link>
+				<Link activeClassName={style.active} href="/contact">Contact</Link>
+			</nav>
+		</div>
 	</header>
 );
 

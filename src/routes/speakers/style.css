@@ -1,0 +1,214 @@
+.speakersPage {
+    min-height: 100vh;
+}
+
+.hero {
+    background: linear-gradient(135deg, #000 0%, #333 100%);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/assets/tedx-pattern.svg') repeat;
+    opacity: 0.1;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 1;
+}
+
+.heroTitle {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ff2b06;
+}
+
+.heroSubtitle {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.sectionTitle {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #333;
+}
+
+.featuredSection {
+    margin-bottom: 80px;
+}
+
+.featuredGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.speakersGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.speakerCard {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.speakerCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.speakerCard.featured {
+    border: 3px solid #ff2b06;
+}
+
+.speakerPhoto {
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    background-color: #f0f0f0;
+    position: relative;
+}
+
+.featured .speakerPhoto {
+    height: 300px;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.speakerCard:hover .overlay {
+    transform: translateY(0);
+}
+
+.talkTitle {
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.speakerInfo {
+    padding: 25px;
+}
+
+.speakerName {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.speakerTitle {
+    font-size: 1rem;
+    color: #ff2b06;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.speakerCompany {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.speakerBio {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Loading states */
+.loading {
+    animation: pulse 1.5s infinite;
+    background: #f0f0f0;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.speakerPhoto.loading {
+    height: 250px;
+}
+
+.speakerName.loading {
+    height: 20px;
+    width: 70%;
+    margin-bottom: 10px;
+}
+
+.speakerTitle.loading {
+    height: 16px;
+    width: 50%;
+    margin-bottom: 8px;
+}
+
+.speakerBio.loading {
+    height: 60px;
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .heroTitle {
+        font-size: 2.5rem;
+    }
+
+    .heroSubtitle {
+        font-size: 1.1rem;
+        padding: 0 20px;
+    }
+
+    .container {
+        padding: 40px 15px;
+    }
+
+    .featuredGrid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .speakersGrid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .sectionTitle {
+        font-size: 2rem;
+    }
+}
