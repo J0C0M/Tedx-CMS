@@ -1,6 +1,5 @@
 import netlifyPlugin from 'preact-cli-plugin-netlify';
 import ImageminPlugin from 'imagemin-webpack-plugin';
-import imageminWebp from 'imagemin-webp';
 
 export default (config, env) => {
 	netlifyPlugin(config);
@@ -10,12 +9,7 @@ export default (config, env) => {
 			from: './build/assets/**',
 			pngquant: {
 				quality: '60'
-			},
-			plugins: [
-				imageminWebp({
-					quality: 50
-				})
-			]
+			}
 		}));
 	}
 
