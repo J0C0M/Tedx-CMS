@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.css';
-import { useEffect } from 'preact-hooks';
+import {  useEffect } from 'preact/hooks';
 
 const Home = () => {
 
