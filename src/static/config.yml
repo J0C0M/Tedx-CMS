@@ -31,6 +31,7 @@ collections:
       - { label: "Slug", name: "slug", widget: "string" }
       - { label: "Body", name: "body", widget: "markdown" }
 
+  # Speakers collection for individual speaker profiles
   - name: "speakers"
     label: "Speakers"
     label_singular: "Speaker"
@@ -50,17 +51,79 @@ collections:
       - { label: "Website", name: "website", widget: "string", required: false}
       - { label: "Featured Speaker", name: "featured", widget: "boolean", default: false}
 
-  - name: "event_info"
-    label: "Event Information"
-    label_singular: "Event Info"
-    folder: "content/event"
+  # Speakers page configuration
+  - name: "speakers_page"
+    label: "Speakers Page"
+    label_singular: "Speakers Page"
+    folder: "content/pages"
+    create: false
+    slug: "speakers"
+    fields:
+      - { label: "Title", name: "title", widget: "string", default: "Speakers" }
+      - { label: "Slug", name: "slug", widget: "hidden", default: "speakers" }
+      - { label: "Page Type", name: "page_type", widget: "hidden", default: "speakers" }
+      - { label: "Hero Title", name: "hero_title", widget: "string", default: "Meet Our Speakers" }
+      - { label: "Hero Subtitle", name: "hero_subtitle", widget: "text", required: false }
+      - { label: "Introduction", name: "intro", widget: "markdown", required: false }
+      - { label: "Show Featured Speakers First", name: "show_featured_first", widget: "boolean", default: true }
+
+  # Events collection for individual events
+  - name: "events"
+    label: "Events"
+    label_singular: "Event"
+    folder: "content/events"
     create: true
     slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string"}
       - { label: "Date", name: "date", widget: "datetime"}
+      - { label: "End Date", name: "end_date", widget: "datetime", required: false}
       - { label: "Location", name: "location", widget: "string"}
       - { label: "Address", name: "address", widget: "text"}
       - { label: "Description", name: "description", widget: "text"}
       - { label: "Registration Link", name: "registration_link", widget: "string", required: false}
       - { label: "Event Image", name: "image", widget: "image", required: false}
+      - { label: "Price", name: "price", widget: "string", required: false}
+      - { label: "Capacity", name: "capacity", widget: "number", required: false}
+      - { label: "Status", name: "status", widget: "select", options: ["upcoming", "ongoing", "completed", "cancelled"], default: "upcoming"}
+      - { label: "Featured Event", name: "featured", widget: "boolean", default: false}
+      - { label: "Tags", name: "tags", widget: "list", required: false}
+
+  # Events page configuration
+  - name: "events_page"
+    label: "Events Page"
+    label_singular: "Events Page"
+    folder: "content/pages"
+    create: false
+    slug: "events"
+    fields:
+      - { label: "Title", name: "title", widget: "string", default: "Events" }
+      - { label: "Slug", name: "slug", widget: "hidden", default: "events" }
+      - { label: "Page Type", name: "page_type", widget: "hidden", default: "events" }
+      - { label: "Hero Title", name: "hero_title", widget: "string", default: "Upcoming Events" }
+      - { label: "Hero Subtitle", name: "hero_subtitle", widget: "text", required: false }
+      - { label: "Introduction", name: "intro", widget: "markdown", required: false }
+      - { label: "Show Past Events", name: "show_past_events", widget: "boolean", default: true }
+      - { label: "Events Per Page", name: "events_per_page", widget: "number", default: 12 }
+
+  # Site configuration
+  - name: "site_config"
+    label: "Site Configuration"
+    label_singular: "Site Config"
+    folder: "content/config"
+    create: false
+    slug: "site"
+    fields:
+      - { label: "Site Title", name: "site_title", widget: "string" }
+      - { label: "Site Description", name: "site_description", widget: "text" }
+      - { label: "Navigation", name: "navigation", widget: "list", fields: [
+        { label: "Label", name: "label", widget: "string" },
+        { label: "URL", name: "url", widget: "string" }
+      ]}
+      - { label: "Footer Text", name: "footer_text", widget: "text", required: false }
+      - { label: "Social Links", name: "social_links", widget: "object", fields: [
+        { label: "Twitter", name: "twitter", widget: "string", required: false },
+        { label: "LinkedIn", name: "linkedin", widget: "string", required: false },
+        { label: "Facebook", name: "facebook", widget: "string", required: false },
+        { label: "Instagram", name: "instagram", widget: "string", required: false }
+      ]}
