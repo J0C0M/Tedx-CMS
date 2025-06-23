@@ -43,6 +43,7 @@
     "parse-md": "^2.0.4",
     "preact": "^10.11.3",
     "preact-cli-plugin-netlify": "^1.6.0",
+    "preact-hooks": "^0.0.0-0.0.0",
     "preact-render-to-string": "^5.2.6",
     "preact-router": "^4.1.0"
   },

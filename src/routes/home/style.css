@@ -13,7 +13,6 @@
 
 .image {
 	height: 30vw;
-	background-image: url(/assets/profile.jpg);
 	background-size: cover;
 	background-position: center;
 }
@@ -24,7 +23,6 @@
 	flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url("/assets/quotes.svg");
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -86,6 +84,405 @@
 		max-width: 100%;
 		text-align: justify;
 		padding: 0;
+	}
+}
+
+.home {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+/* Hero Section */
+.hero {
+	background: linear-gradient(135deg, #E62B1E 0%, #FF6B47 100%);
+	color: white;
+	padding: 80px 0;
+	min-height: 60vh;
+	display: flex;
+	align-items: center;
+}
+
+.heroContent {
+	display: flex;
+	align-items: center;
+	gap: 60px;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.heroText {
+	flex: 1;
+}
+
+.heroTitle {
+	font-size: 4rem;
+	font-weight: 700;
+	margin-bottom: 20px;
+	line-height: 1.1;
+}
+
+.tedx {
+	display: block;
+	font-size: 5rem;
+}
+
+.roc {
+	display: block;
+	font-size: 2.5rem;
+	opacity: 0.9;
+}
+
+.heroSubtitle {
+	font-size: 2rem;
+	font-weight: 300;
+	margin-bottom: 30px;
+	color: #FFE4E1;
+}
+
+.heroDescription {
+	font-size: 1.2rem;
+	line-height: 1.6;
+	margin-bottom: 40px;
+	opacity: 0.9;
+}
+
+.heroButtons {
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.btnPrimary {
+	background: white;
+	color: #E62B1E;
+	padding: 15px 30px;
+	border-radius: 50px;
+	text-decoration: none;
+	font-weight: 600;
+	transition: all 0.3s ease;
+	display: inline-block;
+}
+
+.btnPrimary:hover {
+	background: #f0f0f0;
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btnSecondary {
+	background: transparent;
+	color: white;
+	padding: 15px 30px;
+	border: 2px solid white;
+	border-radius: 50px;
+	text-decoration: none;
+	font-weight: 600;
+	transition: all 0.3s ease;
+	display: inline-block;
+}
+
+.btnSecondary:hover {
+	background: white;
+	color: #E62B1E;
+	transform: translateY(-2px);
+}
+
+.heroImage {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.tedxLogo img {
+	max-width: 300px;
+	height: auto;
+	filter: brightness(0) invert(1);
+}
+
+/* Event Info Section */
+.eventInfo {
+	padding: 80px 0;
+	background: #f8f9fa;
+}
+
+.eventDetails {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 30px;
+}
+
+.eventCard {
+	background: white;
+	padding: 40px;
+	border-radius: 15px;
+	text-align: center;
+	box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+	transition: transform 0.3s ease;
+}
+
+.eventCard:hover {
+	transform: translateY(-5px);
+}
+
+.eventCard h3 {
+	font-size: 1.5rem;
+	margin-bottom: 15px;
+	color: #E62B1E;
+}
+
+.eventCard p {
+	font-size: 1.1rem;
+	color: #666;
+	line-height: 1.5;
+}
+
+/* About Section */
+.about {
+	padding: 80px 0;
+	background: white;
+}
+
+.aboutContent {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 60px;
+	align-items: center;
+}
+
+.aboutText h2 {
+	font-size: 2.5rem;
+	color: #E62B1E;
+	margin-bottom: 30px;
+	font-weight: 600;
+}
+
+.aboutText p {
+	font-size: 1.1rem;
+	line-height: 1.7;
+	color: #666;
+	margin-bottom: 20px;
+}
+
+.aboutImage img {
+	width: 100%;
+	border-radius: 15px;
+	box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* ROBORACER Section */
+.roboracer {
+	padding: 80px 0;
+	background: #1a1a1a;
+	color: white;
+}
+
+.roboracerContent {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 60px;
+	align-items: center;
+}
+
+.roboracerImage img {
+	width: 100%;
+	max-width: 250px;
+}
+
+.roboracerText h2 {
+	font-size: 2.5rem;
+	color: #E62B1E;
+	margin-bottom: 30px;
+	font-weight: 600;
+}
+
+.roboracerText p {
+	font-size: 1.1rem;
+	line-height: 1.7;
+	margin-bottom: 20px;
+	opacity: 0.9;
+}
+
+.roboracerText .btnSecondary {
+	margin-top: 20px;
+	border-color: #E62B1E;
+	color: #E62B1E;
+}
+
+.roboracerText .btnSecondary:hover {
+	background: #E62B1E;
+	color: white;
+}
+
+/* Transportation Section */
+.transportation {
+	padding: 80px 0;
+	background: #f8f9fa;
+}
+
+.transportation h2 {
+	text-align: center;
+	font-size: 2.5rem;
+	color: #E62B1E;
+	margin-bottom: 50px;
+	font-weight: 600;
+}
+
+.transportGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	gap: 40px;
+}
+
+.transportCard {
+	background: white;
+	padding: 40px;
+	border-radius: 15px;
+	box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+	transition: transform 0.3s ease;
+}
+
+.transportCard:hover {
+	transform: translateY(-5px);
+}
+
+.transportCard h3 {
+	font-size: 1.5rem;
+	margin-bottom: 20px;
+	color: #E62B1E;
+}
+
+.transportCard p {
+	font-size: 1.1rem;
+	color: #666;
+	line-height: 1.6;
+}
+
+/* Call to Action Section */
+.cta {
+	padding: 80px 0;
+	background: linear-gradient(135deg, #E62B1E 0%, #FF6B47 100%);
+	color: white;
+	text-align: center;
+}
+
+.cta h2 {
+	font-size: 3rem;
+	margin-bottom: 20px;
+	font-weight: 600;
+}
+
+.cta p {
+	font-size: 1.3rem;
+	margin-bottom: 40px;
+	opacity: 0.9;
+}
+
+.ctaButtons {
+	display: flex;
+	gap: 20px;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.heroContent {
+		flex-direction: column;
+		text-align: center;
+		gap: 40px;
+	}
+
+	.heroTitle {
+		font-size: 3rem;
+	}
+
+	.tedx {
+		font-size: 4rem;
+	}
+
+	.roc {
+		font-size: 2rem;
+	}
+
+	.heroSubtitle {
+		font-size: 1.5rem;
+	}
+
+	.aboutContent {
+		grid-template-columns: 1fr;
+		gap: 40px;
+		text-align: center;
+	}
+
+	.roboracerContent {
+		grid-template-columns: 1fr;
+		gap: 40px;
+		text-align: center;
+	}
+
+	.transportGrid {
+		grid-template-columns: 1fr;
+	}
+
+	.eventDetails {
+		grid-template-columns: 1fr;
+	}
+
+	.heroButtons {
+		justify-content: center;
+	}
+
+	.ctaButtons {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.btnPrimary, .btnSecondary {
+		width: 250px;
+		text-align: center;
+	}
+}
+
+@media (max-width: 480px) {
+	.container {
+		padding: 0 15px;
+	}
+
+	.hero {
+		padding: 60px 0;
+	}
+
+	.heroTitle {
+		font-size: 2.5rem;
+	}
+
+	.tedx {
+		font-size: 3rem;
+	}
+
+	.roc {
+		font-size: 1.5rem;
+	}
+
+	.heroDescription {
+		font-size: 1rem;
+	}
+
+	.eventInfo, .about, .roboracer, .transportation, .cta {
+		padding: 60px 0;
+	}
+
+	.eventCard, .transportCard {
+		padding: 30px 20px;
 	}
 }
 
