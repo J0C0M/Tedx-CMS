@@ -13,7 +13,6 @@
 
 .image {
 	height: 30vw;
-	background-image: url(/assets/profile.jpg);
 	background-size: cover;
 	background-position: center;
 }
@@ -24,7 +23,6 @@
 	flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url("/assets/quotes.svg");
   background-repeat: no-repeat;
   background-position: center;
 }

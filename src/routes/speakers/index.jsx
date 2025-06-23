@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { usePrerenderData } from '@preact/prerender-data-provider';
-import style from './style';
+import style from './style.css';
 
 const Speakers = (props) => {
 	const [data, isLoading] = usePrerenderData(props);
@@ -27,10 +27,10 @@ function getSpeakersContent(data, isLoading) {
 			<div class={style.loadingGrid}>
 				{[...Array(6)].map((_, i) => (
 					<div key={i} class={style.speakerCardLoading}>
-						<div class={`${style.speakerImageLoading} loading`}></div>
-						<div class={`${style.speakerNameLoading} loading`}></div>
-						<div class={`${style.speakerTitleLoading} loading`}></div>
-						<div class={`${style.speakerBioLoading} loading`}></div>
+						<div class={`${style.speakerImageLoading} loading`} />
+						<div class={`${style.speakerNameLoading} loading`} />
+						<div class={`${style.speakerTitleLoading} loading`} />
+						<div class={`${style.speakerBioLoading} loading`} />
 					</div>
 				))}
 			</div>
@@ -49,7 +49,7 @@ function getSpeakersContent(data, isLoading) {
 						<h2 class={style.sectionTitle}>Featured Speakers</h2>
 						<div class={style.featuredGrid}>
 							{featuredSpeakers.map(speaker => (
-								<SpeakerCard key={speaker.id} speaker={speaker} featured={true} />
+								<SpeakerCard key={speaker.id} speaker={speaker} featured />
 							))}
 						</div>
 					</section>
@@ -102,17 +102,17 @@ function SpeakerCard({ speaker, featured }) {
 				{(speaker.linkedin || speaker.twitter || speaker.website) && (
 					<div class={style.speakerSocial}>
 						{speaker.linkedin && (
-							<a href={speaker.linkedin} target="_blank" rel="noopener" class={style.socialLink}>
+							<a href={speaker.linkedin} target="_blank" rel="noopener noreferrer" class={style.socialLink}>
 								LinkedIn
 							</a>
 						)}
 						{speaker.twitter && (
-							<a href={speaker.twitter} target="_blank" rel="noopener" class={style.socialLink}>
+							<a href={speaker.twitter} target="_blank" rel="noopener noreferrer" class={style.socialLink}>
 								Twitter
 							</a>
 						)}
 						{speaker.website && (
-							<a href={speaker.website} target="_blank" rel="noopener" class={style.socialLink}>
+							<a href={speaker.website} target="_blank" rel="noopener noreferrer" class={style.socialLink}>
 								Website
 							</a>
 						)}
