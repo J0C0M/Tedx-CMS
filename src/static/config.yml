@@ -16,7 +16,6 @@ collections:
       - { label: "Cover", name: "cover", widget: "image", required: false}
       - { label: "Tags", name: "tags", widget: "string" }
       - { label: "Body", name: "body", widget: "markdown"}
-
   - name: "speakers"
     label: "Speakers"
     label_singular: "Speaker"
@@ -26,9 +25,24 @@ collections:
       - { label: "Name", name: "name", widget: "string"}
       - { label: "Title/Position", name: "title", widget: "string"}
       - { label: "Company/Organization", name: "company", widget: "string", required: false}
-      - { label: "Photo", name: "photo", widget: "image"}
       - { label: "Bio", name: "bio", widget: "text"}
       - { label: "Talk Title", name: "talk_title", widget: "string"}
       - { label: "Talk Description", name: "talk_description", widget: "text"}
-      - { label: "Featured", name: "featured", widget: "boolean", default: false}
-      - { label: "Order", name: "order", widget: "number", default: 0}
+      - { label: "Profile Image", name: "image", widget: "image"}
+      - { label: "LinkedIn", name: "linkedin", widget: "string", required: false}
+      - { label: "Twitter", name: "twitter", widget: "string", required: false}
+      - { label: "Website", name: "website", widget: "string", required: false}
+      - { label: "Featured Speaker", name: "featured", widget: "boolean", default: false}
+  - name: "event_info"
+    label: "Event Information"
+    label_singular: "Event Info"
+    folder: "content/event"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string"}
+      - { label: "Date", name: "date", widget: "datetime"}
+      - { label: "Location", name: "location", widget: "string"}
+      - { label: "Address", name: "address", widget: "text"}
+      - { label: "Description", name: "description", widget: "text"}
+      - { label: "Registration Link", name: "registration_link", widget: "string", required: false}
+      - { label: "Event Image", name: "image", widget: "image", required: false}
