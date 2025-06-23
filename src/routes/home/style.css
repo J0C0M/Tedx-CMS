@@ -205,7 +205,8 @@
 .tedxLogo img {
 	max-width: 300px;
 	height: auto;
-	filter: brightness(0) invert(1);
+	border-radius: 100%;
+	box-shadow: 0 30px 40px rgba(0,0,0,.1);
 }
 
 /* Event Info Section */

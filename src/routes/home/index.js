@@ -31,6 +31,8 @@ const Home = () => {
 							This is an event where we have put two events together to make one big event!
 							We kick off the week with the exciting competition of ROBORACER where teams will compete
 							against each other to see who has the best car and algorithm!
+							After this great racing spectacle we will continue with TEDx, where various speakers will talk about their field of expertise and their studies.
+							Interested? Be sure to come!
 						</p>
 						<div class={style.heroButtons}>
 							<Link href="#" class={style.btnPrimary}>Get Your Tickets</Link>
@@ -40,26 +42,6 @@ const Home = () => {
 					<div class={style.heroImage}>
 						<div class={style.tedxLogo}>
 							<img src="/assets/logo/tedx-roboracer.png" alt="TEDx Logo" />
-						</div>
-					</div>
-				</div>
-			</section>
-
-			{/* Event Info Section */}
-			<section class={style.eventInfo}>
-				<div class={style.container}>
-					<div class={style.eventDetails}>
-						<div class={style.eventCard}>
-							<h3>📅 Date & Time</h3>
-							<p>Coming Soon</p>
-						</div>
-						<div class={style.eventCard}>
-							<h3>📍 Location</h3>
-							<p>Heyendaalseweg 98<br />6525 EE Nijmegen<br />Netherlands</p>
-						</div>
-						<div class={style.eventCard}>
-							<h3>🎯 Theme</h3>
-							<p>Innovation in Action</p>
 						</div>
 					</div>
 				</div>
@@ -87,7 +69,7 @@ const Home = () => {
 							</p>
 						</div>
 						<div class={style.aboutImage}>
-							<img src="/assets/innovation-image.jpg" alt="Innovation in Action" />
+							<img src="/assets/logo/logo-black.png" alt="TEDx Logo" />
 						</div>
 					</div>
 				</div>
@@ -98,7 +80,7 @@ const Home = () => {
 				<div class={style.container}>
 					<div class={style.roboracerContent}>
 						<div class={style.roboracerImage}>
-							<img src="/assets/roboracer-logo.png" alt="ROBORACER" />
+							<img src="/assets/logo/IMG_0944.gif" alt="ROBORACER" />
 						</div>
 						<div class={style.roboracerText}>
 							<h2>ROBORACER Competition</h2>
