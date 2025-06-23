@@ -1,11 +1,9 @@
-import { h } from "preact";
-import { useEffect, useState } from 'preact/hooks';
+import { h } from 'preact';
 import { Link } from 'preact-router';
-import style from "./style";
+import style from './style.css';
+import { useEffect } from 'preact-hooks';
 
 const Home = () => {
-	const [eventData, setEventData] = useState(null);
-	const [speakers, setSpeakers] = useState([]);
 
 	/**
 	 * Netlify CMS's accept invite link land on home page.
@@ -35,7 +33,7 @@ const Home = () => {
 							against each other to see who has the best car and algorithm!
 						</p>
 						<div class={style.heroButtons}>
-							<Link href="/register" class={style.btnPrimary}>Register Now</Link>
+							<Link href="/https://www.eventbrite.com/e/tickets-tedx-roc-nijmegen-1204808858729?aff=oddtdtcreator" class={style.btnPrimary}>Get Your Tickets</Link>
 							<Link href="/speakers" class={style.btnSecondary}>View Speakers</Link>
 						</div>
 					</div>

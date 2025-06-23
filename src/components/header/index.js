@@ -11,9 +11,9 @@ const Header = () => (
 			</Link>
 			<nav class={style.nav}>
 				<Link activeClassName={style.active} href="/">Home</Link>
-				<Link activeClassName={style.active} href="/speakers">Speakers</Link>
+				<Link activeClassName={style.active} href="#speakers">Speakers</Link>
+				<Link activeClassName={style.active} href="#blogs">Blog</Link>
 				<Link activeClassName={style.active} href="/blogs">Blog</Link>
-				<Link activeClassName={style.active} href="/contact">Contact</Link>
 			</nav>
 		</div>
 	</header>
