@@ -7,6 +7,7 @@ import style from './style.css';
 const Blogs = () => {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		loadBlogPosts();
@@ -14,32 +15,93 @@ const Blogs = () => {
 
 	const loadBlogPosts = async () => {
 		try {
-			// Get all markdown files from content/blog directory
-			const context = require.context('../../../content/blog', false, /\.md$/);
+			setLoading(true);
+			setError(null);
+
+			// Method 1: Using require.context (webpack specific)
+			try {
+				const context = require.context('../../../content/blog', false, /\.md$/);
+				const posts = [];
+
+				for (const key of context.keys()) {
+					try {
+						// Get the raw content - this might need adjustment based on your bundler
+						const fileContent = context(key).default || context(key);
+
+						// If fileContent is not a string, it might be a module
+						const markdownContent = typeof fileContent === 'string'
+							? fileContent
+							: fileContent.default || fileContent;
+
+						const { metadata, content } = parseMd(markdownContent);
+
+						posts.push({
+							slug: key.replace('./', '').replace('.md', ''),
+							...metadata,
+							content,
+							excerpt: content.substring(0, 200) + (content.length > 200 ? '...' : '')
+						});
+					} catch (fileError) {
+						console.warn(`Error processing file ${key}:`, fileError);
+					}
+				}
+
+				// Sort posts by date (newest first)
+				posts.sort((a, b) => {
+					const dateA = new Date(a.date || 0);
+					const dateB = new Date(b.date || 0);
+					return dateB - dateA;
+				});
+
+				setPosts(posts);
+			} catch (contextError) {
+				console.error('require.context failed:', contextError);
+
+				// Method 2: Fallback - manual import (you'll need to add imports for each file)
+				await loadPostsManually();
+			}
+		} catch (error) {
+			console.error('Error loading blog posts:', error);
+			setError('Failed to load blog posts');
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	// Fallback method - you'll need to import each markdown file manually
+	const loadPostsManually = async () => {
+		try {
 			const posts = [];
 
-			for (const key of context.keys()) {
-				const response = await fetch(key.replace('./', '/content/blog/'));
-				const text = await response.text();
-				const { metadata, content } = parseMd(text);
+			// Import your markdown files manually
+			// You'll need to add these imports at the top of the file or use dynamic imports
+			const helloTitleMd = await import('../../../content/blog/hello-title.md');
 
-				posts.push({
-					slug: key.replace('./', '').replace('.md', ''),
-					...metadata,
-					content,
-					excerpt: content.substring(0, 200) + '...'
-				});
-			}
+			// Process the imported markdown
+			const fileContent = helloTitleMd.default || helloTitleMd;
+			const { metadata, content } = parseMd(fileContent);
 
-			// Sort posts by date (newest first)
-			posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+			posts.push({
+				slug: 'hello-title',
+				...metadata,
+				content,
+				excerpt: content.substring(0, 200) + (content.length > 200 ? '...' : '')
+			});
+
+			// Add more files here as needed
+			// const anotherPostMd = await import('../../../content/blog/another-post.md');
+			// ... process similarly
+
+			posts.sort((a, b) => {
+				const dateA = new Date(a.date || 0);
+				const dateB = new Date(b.date || 0);
+				return dateB - dateA;
+			});
+
 			setPosts(posts);
-		}
-		catch (error) {
-			console.error('Error loading blog posts:', error);
-		}
-		finally {
-			setLoading(false);
+		} catch (error) {
+			console.error('Manual loading failed:', error);
+			setError('Failed to load blog posts manually');
 		}
 	};
 
@@ -47,6 +109,17 @@ const Blogs = () => {
 		return (
 			<div class={style.container}>
 				<div class={style.loading}>Loading posts...</div>
+			</div>
+		);
+	}
+
+	if (error) {
+		return (
+			<div class={style.container}>
+				<div class={style.error}>
+					<p>{error}</p>
+					<button onClick={loadBlogPosts}>Retry</button>
+				</div>
 			</div>
 		);
 	}
@@ -64,25 +137,28 @@ const Blogs = () => {
 						<article key={post.slug} class={style.postCard}>
 							{post.cover && (
 								<div class={style.postImage}>
-									<img src={post.cover} alt={post.title} />
+									<img src={post.cover} alt={post.title} loading="lazy" />
 								</div>
 							)}
 							<div class={style.postContent}>
 								<div class={style.postMeta}>
-									<time dateTime={post.date}>
-										{new Date(post.date).toLocaleDateString('en-US', {
-											year: 'numeric',
-											month: 'long',
-											day: 'numeric'
-										})}
-									</time>
+									{post.date && (
+										<time dateTime={post.date}>
+											{new Date(post.date).toLocaleDateString('en-US', {
+												year: 'numeric',
+												month: 'long',
+												day: 'numeric'
+											})}
+										</time>
+									)}
 									{post.tags && (
 										<span class={style.tags}>
-											{post.tags.split(',').map(tag => (
-												<span key={tag.trim()} class={style.tag}>
-													{tag.trim()}
-												</span>
-											))}
+											{(typeof post.tags === 'string' ? post.tags.split(',') : post.tags)
+												.map(tag => (
+													<span key={tag.trim()} class={style.tag}>
+														{tag.trim()}
+													</span>
+												))}
 										</span>
 									)}
 								</div>
@@ -93,9 +169,6 @@ const Blogs = () => {
 									<p class={style.postSubtitle}>{post.subtitle}</p>
 								)}
 								<p class={style.postExcerpt}>{post.excerpt}</p>
-								<Link href={`/blog/${post.slug}`} class={style.readMore}>
-									Read More →
-								</Link>
 							</div>
 						</article>
 					))}
@@ -104,6 +177,17 @@ const Blogs = () => {
 				{posts.length === 0 && (
 					<div class={style.noPosts}>
 						<p>No blog posts found.</p>
+						<p>Make sure your markdown files are in the correct directory: content/blog/</p>
+					</div>
+				)}
+
+				{/* Debug information - remove in production */}
+				{process.env.NODE_ENV === 'development' && (
+					<div class={style.debug}>
+						<details>
+							<summary>Debug Info</summary>
+							<pre>{JSON.stringify(posts, null, 2)}</pre>
+						</details>
 					</div>
 				)}
 			</div>
