@@ -1,5 +1,5 @@
 html {
-  font-family: Helvetica Neue,arial,sans-serif;
+  font-family: Helvetica Neue, arial, sans-serif;
   color: #333;
   max-width: 728px;
   width: 100%;
@@ -15,6 +15,7 @@ a {
   color: #000;
 }
 
+/* Blog/Pages Styles */
 .blogTitle {
   font-size: 2.2rem;
   font-weight: 400;
@@ -22,10 +23,312 @@ a {
   line-height: 1;
 }
 
-.blogSubTitle{
+.blogSubTitle {
   color: #aaa;
   display: block;
   text-align: left;
   font-size: 1.2rem;
   margin-bottom: 2rem;
+}
+
+.blogCover {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+
+.blogMeta {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.blogTags {
+  color: #888;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.blogTags .tag {
+  background: #f0f0f0;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+.featuredBadge {
+  background: #ff6b6b;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+.draftBadge {
+  background: #ffa500;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+/* Speaker Styles */
+.speakerCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  margin-bottom: 1rem;
+}
+
+.speakerName {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.speakerTitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.speakerCompany {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.speakerImage {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 1rem 0;
+  border: 3px solid #e0e0e0;
+}
+
+.speakerBio {
+  margin: 1rem 0;
+  line-height: 1.6;
+}
+
+.talkSection {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.talkTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2c5aa0;
+  margin-bottom: 0.5rem;
+}
+
+.talkDescription {
+  color: #666;
+  line-height: 1.6;
+}
+
+.socialLinks {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.socialLinks a {
+  margin-right: 1rem;
+  color: #2c5aa0;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.socialLinks a:hover {
+  text-decoration: underline;
+}
+
+.speakerLevel {
+  background: #2c5aa0;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+.speakerLevel.keynote {
+  background: #ff6b6b;
+}
+
+.speakerLevel.featured {
+  background: #4ecdc4;
+}
+
+.qaAvailable {
+  color: #4caf50;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.qaUnavailable {
+  color: #f44336;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* Event Styles */
+.eventCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  margin-bottom: 1rem;
+}
+
+.eventTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.eventMeta {
+  margin-bottom: 1rem;
+}
+
+.eventDate {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.eventLocation {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.eventAddress {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.eventImage {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.eventDescription {
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+
+.eventType {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+
+.eventStatus {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.eventStatus.upcoming {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.eventStatus.live {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.eventStatus.past {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.eventStatus.cancelled {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.eventCapacity {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.registrationButton {
+  background: #2c5aa0;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.registrationButton:hover {
+  background: #1e3f73;
+  color: white;
+}
+
+.eventTags {
+  margin-top: 1rem;
+}
+
+.eventTags .tag {
+  background: #f0f0f0;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  display: inline-block;
+  font-size: 0.8rem;
+}
+
+/* General utility classes */
+.text-muted {
+  color: #666;
+}
+
+.text-small {
+  font-size: 0.9rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-2 {
+  margin-bottom: 1rem;
+}
+
+.mt-1 {
+  margin-top: 0.5rem;
+}
+
+.mt-2 {
+  margin-top: 1rem;
 }

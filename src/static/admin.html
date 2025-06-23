@@ -5,36 +5,192 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
 </head>
 <body>
-  <!-- Include the script that builds the page and powers Netlify CMS -->
-  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
-  <script type="module">
-    import htm from 'https://unpkg.com/htm?module'
-    const html = htm.bind(h);
-    const PostPreview = createClass({
-      render: function() {
-        const {entry, widgetFor} = this.props;
-        const image = entry.getIn(['data', 'cover'])
-        let imageMarkup = '';
-        if (image) {
-          imageMarkup = html`<div><img src='${image.toString()}'/></div>`;
-        }
-        return (
-          html`
-            <div>
-              <h1 className='blogTitle'>${entry.getIn(['data', 'title'])}</h1>
-              <caption className='blogSubTitle'>${entry.getIn(['data', 'subtitle'])}</caption>
-              ${imageMarkup}
-              <div className='text'>${widgetFor('body')}</div>
-            </div>
-          `
-        );
+<!-- Include the script that builds the page and powers Netlify CMS -->
+<script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+<script type="module">
+  import htm from 'https://unpkg.com/htm?module'
+  const html = htm.bind(h);
+
+  // Pages/Blog Preview Template
+  const PostPreview = createClass({
+    render: function() {
+      const {entry, widgetFor} = this.props;
+      const image = entry.getIn(['data', 'cover']);
+      const title = entry.getIn(['data', 'title']);
+      const subtitle = entry.getIn(['data', 'subtitle']);
+      const date = entry.getIn(['data', 'date']);
+      const tags = entry.getIn(['data', 'tags']);
+      const featured = entry.getIn(['data', 'featured']);
+      const draft = entry.getIn(['data', 'draft']);
+
+      let imageMarkup = '';
+      if (image) {
+        imageMarkup = html`<img src='${image.toString()}' className='blogCover' alt='Cover image'/>`;
       }
-    });
-    CMS.registerPreviewStyle("/preview.css");
-    CMS.registerPreviewTemplate("pages", PostPreview);
-  </script>
+
+      let tagsMarkup = '';
+      if (tags && Array.isArray(tags)) {
+        const tagElements = tags.map(tag => html`<span className='tag'>${tag}</span>`);
+        tagsMarkup = html`<div className='blogTags'>Tags: ${tagElements}</div>`;
+      }
+
+      return html`
+        <div>
+          <div className='blogTitle'>
+            ${title}
+            ${featured && html`<span className='featuredBadge'>Featured</span>`}
+            ${draft && html`<span className='draftBadge'>Draft</span>`}
+          </div>
+          ${subtitle && html`<div className='blogSubTitle'>${subtitle}</div>`}
+          ${date && html`<div className='blogMeta'>Published: ${new Date(date).toLocaleDateString()}</div>`}
+          ${tagsMarkup}
+          ${imageMarkup}
+          <div className='text'>${widgetFor('body')}</div>
+        </div>
+      `;
+    }
+  });
+
+  // Speaker Preview Template
+  const SpeakerPreview = createClass({
+    render: function() {
+      const {entry} = this.props;
+      const name = entry.getIn(['data', 'name']);
+      const title = entry.getIn(['data', 'title']);
+      const company = entry.getIn(['data', 'company']);
+      const bio = entry.getIn(['data', 'bio']);
+      const talkTitle = entry.getIn(['data', 'talk_title']);
+      const talkDescription = entry.getIn(['data', 'talk_description']);
+      const image = entry.getIn(['data', 'image']);
+      const linkedin = entry.getIn(['data', 'linkedin']);
+      const twitter = entry.getIn(['data', 'twitter']);
+      const website = entry.getIn(['data', 'website']);
+      const level = entry.getIn(['data', 'level']);
+      const featured = entry.getIn(['data', 'featured']);
+      const qaAvailable = entry.getIn(['data', 'qa_available']);
+
+      let imageMarkup = '';
+      if (image) {
+        imageMarkup = html`<img src='${image.toString()}' className='speakerImage' alt='${name} profile'/>`;
+      }
+
+      let socialLinksMarkup = '';
+      if (linkedin || twitter || website) {
+        const links = [];
+        if (linkedin) links.push(html`<a href='${linkedin}' target='_blank'>LinkedIn</a>`);
+        if (twitter) links.push(html`<a href='${twitter}' target='_blank'>Twitter</a>`);
+        if (website) links.push(html`<a href='${website}' target='_blank'>Website</a>`);
+        socialLinksMarkup = html`<div className='socialLinks'>${links}</div>`;
+      }
+
+      let levelClass = level ? level.toLowerCase() : 'regular';
+
+      return html`
+        <div className='speakerCard'>
+          <div className='speakerName'>
+            ${name}
+            ${level && html`<span className='speakerLevel ${levelClass}'>${level}</span>`}
+            ${featured && html`<span className='featuredBadge'>Featured</span>`}
+          </div>
+          <div className='speakerTitle'>${title}</div>
+          ${company && html`<div className='speakerCompany'>${company}</div>`}
+          ${imageMarkup}
+          <div className='speakerBio'>${bio}</div>
+          ${talkTitle && html`
+            <div className='talkSection'>
+              <div className='talkTitle'>${talkTitle}</div>
+              ${talkDescription && html`<div className='talkDescription'>${talkDescription}</div>`}
+            </div>
+          `}
+          ${qaAvailable !== undefined && html`
+            <div className='${qaAvailable ? "qaAvailable" : "qaUnavailable"}'>
+              ${qaAvailable ? "✓ Available for Q&A" : "✗ Not available for Q&A"}
+            </div>
+          `}
+          ${socialLinksMarkup}
+        </div>
+      `;
+    }
+  });
+
+  // Event Preview Template
+  const EventPreview = createClass({
+    render: function() {
+      const {entry} = this.props;
+      const title = entry.getIn(['data', 'title']);
+      const date = entry.getIn(['data', 'date']);
+      const endDate = entry.getIn(['data', 'end_date']);
+      const location = entry.getIn(['data', 'location']);
+      const address = entry.getIn(['data', 'address']);
+      const description = entry.getIn(['data', 'description']);
+      const registrationLink = entry.getIn(['data', 'registration_link']);
+      const image = entry.getIn(['data', 'image']);
+      const eventType = entry.getIn(['data', 'event_type']);
+      const capacity = entry.getIn(['data', 'capacity']);
+      const status = entry.getIn(['data', 'status']);
+      const tags = entry.getIn(['data', 'tags']);
+      const registrationRequired = entry.getIn(['data', 'registration_required']);
+
+      let imageMarkup = '';
+      if (image) {
+        imageMarkup = html`<img src='${image.toString()}' className='eventImage' alt='Event image'/>`;
+      }
+
+      let registrationMarkup = '';
+      if (registrationLink) {
+        registrationMarkup = html`<a href='${registrationLink}' className='registrationButton' target='_blank'>Register Now</a>`;
+      }
+
+      let tagsMarkup = '';
+      if (tags && Array.isArray(tags)) {
+        const tagElements = tags.map(tag => html`<span className='tag'>${tag}</span>`);
+        tagsMarkup = html`<div className='eventTags'>${tagElements}</div>`;
+      }
+
+      let statusClass = status ? status.toLowerCase() : 'upcoming';
+
+      return html`
+          <div className='eventCard'>
+            <div className='eventTitle'>
+              ${title}
+              ${eventType && html`<span className='eventType'>${eventType}</span>`}
+              ${status && html`<span className='eventStatus ${statusClass}'>${status}</span>`}
+            </div>
+            <div className='eventMeta'>
+              ${date && html`<div className='eventDate'>📅 ${new Date(date).toLocaleDateString()} at ${new Date(date).toLocaleTimeString()}</div>`}
+              ${endDate && html`<div className='eventDate'>📅 Ends: ${new Date(endDate).toLocaleDateString()} at ${new Date(endDate).toLocaleTimeString()}</div>`}
+              ${location && html`<div className='eventLocation'>📍 ${location}</div>`}
+              ${address && html`<div className='eventAddress'>${address}</div>`}
+              ${capacity && html`<div className='eventCapacity'>👥 Max attendees: ${capacity}</div>`}
+              ${registrationRequired !== undefined && html`
+                <div className='text-small'>
+                  ${registrationRequired ? "🎫 Registration required" : "🎫 Registration not required"}
+                </div>
+              `}
+            </div>
+            ${imageMarkup}
+            ${description && html`<div className='eventDescription'>${description}</div>`}
+            ${tagsMarkup}
+            ${registrationMarkup}
+          </div>
+        `;
+    }
+  });
+
+  // Register preview templates
+  CMS.registerPreviewTemplate("pages", PostPreview);
+  CMS.registerPreviewTemplate("speakers", SpeakerPreview);
+  CMS.registerPreviewTemplate("event_info", EventPreview);
+
+  // Custom widget for better boolean display
+  CMS.registerWidget("boolean", "boolean", {
+    controlComponent: CMS.widgets.boolean.controlComponent,
+    previewComponent: ({ value }) => html`<span>${value ? "Yes" : "No"}</span>`
+  });
+</script>
 </body>
 </html>
