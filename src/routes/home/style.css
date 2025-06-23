@@ -101,7 +101,7 @@
 
 /* Hero Section */
 .hero {
-	background: linear-gradient(135deg, #E62B1E 0%, #FF6B47 100%);
+	background: #E62B1E;
 	color: white;
 	padding: 80px 0;
 	min-height: 60vh;
@@ -260,7 +260,7 @@
 
 .aboutText h2 {
 	font-size: 2.5rem;
-	color: #E62B1E;
+	color: #2c5e7f;
 	margin-bottom: 30px;
 	font-weight: 600;
 }

@@ -56,20 +56,6 @@ const Footer = () => (
 					</div>
 				</div>
 			</div>
-
-			{/* Copyright */}
-			<div class={style.footerBottom}>
-				<div class={style.copyright}>
-					<p>&copy; 2025 TEDx ROC Nijmegen. All rights reserved.</p>
-					<p class={style.tedNotice}>
-                        This independent TEDx event is operated under license from TED.
-					</p>
-				</div>
-				<div class={style.footerBottomLinks}>
-					<Link href="/privacy" class={style.footerBottomLink}>Privacy Policy</Link>
-					<Link href="/terms" class={style.footerBottomLink}>Terms of Service</Link>
-				</div>
-			</div>
 		</div>
 	</footer>
 );

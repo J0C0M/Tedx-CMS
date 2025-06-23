@@ -39,7 +39,7 @@ const Home = () => {
 					</div>
 					<div class={style.heroImage}>
 						<div class={style.tedxLogo}>
-							<img src="/assets/tedx-logo.png" alt="TEDx Logo" />
+							<img src="/assets/logo/tedx-roboracer.png" alt="TEDx Logo" />
 						</div>
 					</div>
 				</div>

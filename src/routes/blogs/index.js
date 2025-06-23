@@ -41,7 +41,8 @@ const Blogs = () => {
 							content,
 							excerpt: content.substring(0, 200) + (content.length > 200 ? '...' : '')
 						});
-					} catch (fileError) {
+					}
+					catch (fileError) {
 						console.warn(`Error processing file ${key}:`, fileError);
 					}
 				}
@@ -54,16 +55,19 @@ const Blogs = () => {
 				});
 
 				setPosts(posts);
-			} catch (contextError) {
+			}
+			catch (contextError) {
 				console.error('require.context failed:', contextError);
 
 				// Method 2: Fallback - manual import (you'll need to add imports for each file)
 				await loadPostsManually();
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error('Error loading blog posts:', error);
 			setError('Failed to load blog posts');
-		} finally {
+		}
+		finally {
 			setLoading(false);
 		}
 	};
@@ -99,7 +103,8 @@ const Blogs = () => {
 			});
 
 			setPosts(posts);
-		} catch (error) {
+		}
+		catch (error) {
 			console.error('Manual loading failed:', error);
 			setError('Failed to load blog posts manually');
 		}
@@ -118,6 +123,7 @@ const Blogs = () => {
 			<div class={style.container}>
 				<div class={style.error}>
 					<p>{error}</p>
+					{/* eslint-disable-next-line react/jsx-no-bind */}
 					<button onClick={loadBlogPosts}>Retry</button>
 				</div>
 			</div>
@@ -181,15 +187,6 @@ const Blogs = () => {
 					</div>
 				)}
 
-				{/* Debug information - remove in production */}
-				{process.env.NODE_ENV === 'development' && (
-					<div class={style.debug}>
-						<details>
-							<summary>Debug Info</summary>
-							<pre>{JSON.stringify(posts, null, 2)}</pre>
-						</details>
-					</div>
-				)}
 			</div>
 		</div>
 	);
