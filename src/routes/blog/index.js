@@ -1,79 +1,116 @@
 import { h } from 'preact';
-import { Suspense } from 'preact/compat';
-import { usePrerenderData } from '@preact/prerender-data-provider';
+import { useState, useEffect } from 'preact/hooks';
+import { Link } from 'preact-router';
 import Markdown from 'markdown-to-jsx';
-import { FormattedCodeBlock } from './formatted-code-block';
+import parseMd from 'parse-md';
+import style from './style.css';
 
-import style from './style';
+const Blog = ({ name }) => {
+	const [post, setPost] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 
-const blogs = (props) => {
-	const [data, isLoading] = usePrerenderData(props);
+	useEffect(() => {
+		loadBlogPost();
+	}, [name]);
+
+	const loadBlogPost = async () => {
+		try {
+			setLoading(true);
+			const response = await fetch(`/content/blog/${name}.md`);
+
+			if (!response.ok) {
+				throw new Error('Post not found');
+			}
+
+			const text = await response.text();
+			const { metadata, content } = parseMd(text);
+
+			setPost({
+				slug: name,
+				...metadata,
+				content
+			});
+		} catch (err) {
+			setError(err.message);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	if (loading) {
+		return (
+			<div class={style.container}>
+				<div class={style.loading}>Loading post...</div>
+			</div>
+		);
+	}
+
+	if (error) {
+		return (
+			<div class={style.container}>
+				<div class={style.error}>
+					<h1>Post Not Found</h1>
+					<p>The blog post you're looking for doesn't exist.</p>
+					<Link href="/blogs" class={style.backLink}>← Back to Blog</Link>
+				</div>
+			</div>
+		);
+	}
+
 	return (
-		<article class={style.blogcontainer}>
-			{getBlogBody(data, isLoading)}
-		</article>
+		<div class={style.blog}>
+			<div class={style.container}>
+				<nav class={style.breadcrumb}>
+					<Link href="/blogs">← Back to Blog</Link>
+				</nav>
+
+				<article class={style.post}>
+					<header class={style.postHeader}>
+						{post.cover && (
+							<div class={style.postCover}>
+								<img src={post.cover} alt={post.title} />
+							</div>
+						)}
+
+						<div class={style.postMeta}>
+							<time dateTime={post.date} class={style.postDate}>
+								{new Date(post.date).toLocaleDateString('en-US', {
+									year: 'numeric',
+									month: 'long',
+									day: 'numeric'
+								})}
+							</time>
+							{post.tags && (
+								<div class={style.postTags}>
+									{post.tags.split(',').map(tag => (
+										<span key={tag.trim()} class={style.tag}>
+											{tag.trim()}
+										</span>
+									))}
+								</div>
+							)}
+						</div>
+
+						<h1 class={style.postTitle}>{post.title}</h1>
+						{post.subtitle && (
+							<p class={style.postSubtitle}>{post.subtitle}</p>
+						)}
+					</header>
+
+					<div class={style.postContent}>
+						<Markdown>{post.content}</Markdown>
+					</div>
+				</article>
+
+				<nav class={style.postNavigation}>
+					<Link href="/blogs" class={style.backToList}>
+						← All Posts
+					</Link>
+				</nav>
+			</div>
+		</div>
 	);
 };
 
-function CodeBlock(props) {
-	const fallback = <pre><code>{props.children}</code></pre>;
-	if (typeof window === 'undefined') {
-		return (fallback);
-	}
-	return (
-		<Suspense fallback={fallback}>
-			<FormattedCodeBlock {...props} />
-		</Suspense>
-	);
-}
-
-function InlineImage({ alt, title, src }) {
-	return (
-		<div class={style.inlineImageContainer}>
-			<img class={style.inlineImage} src={src} alt={alt} />
-			{title && <span class={style.inlineImageTitle}>{title}</span>}
-		</div>
-	);
-}
-
-function getBlogBody(data, isLoading) {
-	if (isLoading) {
-		return (
-			<div class={style.loadingPlaceholder}>
-				<h1 class={`${style.blogtitle} loading`} >&nbsp;</h1>
-				<caption class={`${style.blogsubtitle} loading`}>&nbsp;</caption>
-				<div class={style.blogbody}>
-					<div class={`${style.loadingBody} loading`} />
-					<div class={`${style.loadingBody} loading`} />
-					<div class={`${style.loadingBody} loading`} />
-				</div>
-			</div>
-		);
-	}
-
-	if (data && data.data) {
-		const { details, content } = data.data;
-		return (
-			<div>
-				<h1 class={style.blogtitle}>{details.title}</h1>
-				{ details.subtitle && <caption class={style.blogsubtitle}>{details.subtitle}</caption> }
-				{ details.cover && <div class={style.blogcover} style={`background-image:url(${details.cover})`} /> }
-				<div class={style.blogbody}>
-					<Markdown options={{
-						overrides: {
-							img: {
-								component: InlineImage
-							},
-							code: {
-								component: CodeBlock
-							}
-						}
-					}}
-					>{ content }</Markdown>
-				</div>
-			</div>
-		);
-	}
-}
-
-export default blogs;
+export default Blog;
