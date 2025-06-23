@@ -1,0 +1,230 @@
+.footer {
+    background: #000;
+    color: #fff;
+    padding: 60px 0 20px;
+    margin-top: 80px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footerContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footerSection {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Logo Styling - Same as Header */
+.logo {
+    text-decoration: none;
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 20px;
+}
+
+.tedx {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff2b06;
+    letter-spacing: -1px;
+}
+
+.roc {
+    font-size: 18px;
+    color: #fff;
+    margin-left: 5px;
+    font-weight: 300;
+}
+
+.footerDescription {
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.footerTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.footerNav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footerLink {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+}
+
+.footerLink:hover {
+    color: #ff2b06;
+}
+
+.eventInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Social Links */
+.socialLinks {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.socialLink {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 12px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.socialLink:hover {
+    color: #ff2b06;
+    border-color: #ff2b06;
+    background: rgba(255, 43, 6, 0.1);
+}
+
+/* Partners */
+.partners {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.partnerLink {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 12px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.partnerLink:hover {
+    color: #ff2b06;
+    border-color: #ff2b06;
+    background: rgba(255, 43, 6, 0.1);
+}
+
+/* Footer Bottom */
+.footerBottom {
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.copyright {
+    color: #999;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.tedNotice {
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.footerBottomLinks {
+    display: flex;
+    gap: 20px;
+}
+
+.footerBottomLink {
+    color: #999;
+    text-decoration: none;
+    font-size: 12px;
+    transition: color 0.3s ease;
+}
+
+.footerBottomLink:hover {
+    color: #ff2b06;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .footerContent {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 40px 0 20px;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    .footerContent {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .tedx {
+        font-size: 24px;
+    }
+
+    .roc {
+        font-size: 16px;
+    }
+
+    .footerTitle {
+        font-size: 16px;
+    }
+
+    .socialLinks {
+        justify-content: flex-start;
+    }
+
+    .footerBottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .footerBottomLinks {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .socialLinks {
+        flex-direction: column;
+    }
+
+    .socialLink,
+    .partnerLink {
+        text-align: center;
+    }
+}

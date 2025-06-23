@@ -33,7 +33,7 @@ const Home = () => {
 							against each other to see who has the best car and algorithm!
 						</p>
 						<div class={style.heroButtons}>
-							<Link href="/https://www.eventbrite.com/e/tickets-tedx-roc-nijmegen-1204808858729?aff=oddtdtcreator" class={style.btnPrimary}>Get Your Tickets</Link>
+							<Link href="#" class={style.btnPrimary}>Get Your Tickets</Link>
 							<Link href="/speakers" class={style.btnSecondary}>View Speakers</Link>
 						</div>
 					</div>
@@ -126,25 +126,13 @@ const Home = () => {
 					<h2>Getting There</h2>
 					<div class={style.transportGrid}>
 						<div class={style.transportCard}>
-							<h3>🚌 Public Transport</h3>
+							<h3>Public Transport</h3>
 							<p>In the area there are many possibilities with public transport. The location is next to a large bus and train station.</p>
 						</div>
 						<div class={style.transportCard}>
-							<h3>🚗 Parking</h3>
+							<h3>Parking</h3>
 							<p>There are many areas in the area where parking is free and the parking garage will be open on race/TEDx day.</p>
 						</div>
-					</div>
-				</div>
-			</section>
-
-			{/* Call to Action */}
-			<section class={style.cta}>
-				<div class={style.container}>
-					<h2>Interested? Be sure to come!</h2>
-					<p>Join us for this exciting combination of innovation, technology, and inspiration.</p>
-					<div class={style.ctaButtons}>
-						<Link href="/register" class={style.btnPrimary}>Register for Event</Link>
-						<Link href="/contact" class={style.btnSecondary}>Contact Us</Link>
 					</div>
 				</div>
 			</section>
