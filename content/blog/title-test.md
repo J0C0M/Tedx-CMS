@@ -1,8 +1,8 @@
 ---
-title: title test
+title: title2
 date: 2025-06-23T17:40:31.308Z
-subtitle: subtitle test
+subtitle: subtitle2
 cover: null
-tags: tags test
+tags: tags2
 ---
-b﻿ody test
+b﻿ody2
