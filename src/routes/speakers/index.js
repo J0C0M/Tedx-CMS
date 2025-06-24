@@ -1,10 +1,10 @@
-// blogs/index.js
+// speakers/index.js
 import { h } from 'preact';
 // In blogs/index.js and speakers/index.js
 import UniversalContent from '../../components/universal-content';
 
-const Blogs = () => {
-	return <UniversalContent contentType="blog" />;
+const Speakers = () => {
+	return <UniversalContent contentType="speaker" />;
 };
 
-export default Blogs;
+export default Speakers;

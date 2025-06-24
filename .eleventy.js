@@ -2,7 +2,7 @@ const { h } = require('preact');
 const renderToString = require('preact-render-to-string');
 const path = require('path');
 
-const Speakers = require('./src/routes/speakers/index.js');
+const Speakers = require('./src/routes/speakers');
 
 module.exports = function(eleventyConfig) {
     // Adjust the glob path to match posts inside 'src/content/blog'
