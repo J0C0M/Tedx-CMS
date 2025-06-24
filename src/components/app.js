@@ -8,7 +8,6 @@ import Footer from './footer';
 import Home from '../routes/home';
 import Speakers from '../routes/speakers';
 import Blogs from '../routes/blogs';
-import Blog from '../routes/blog';
 import NotFoundPage from '../routes/notfound';
 
 export default class App extends Component {
@@ -31,7 +30,6 @@ export default class App extends Component {
 							<Home path="/" />
 							<Speakers path="/speakers/" />
 							<Blogs path="/blogs/" />
-							<Blog path="/blog/:name" />
 							<NotFoundPage type="404" default />
 						</Router>
 					</main>
