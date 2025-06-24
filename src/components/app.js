@@ -9,6 +9,7 @@ import Home from '../routes/home';
 import Speakers from '../routes/speakers';
 import Blogs from '../routes/blogs';
 import NotFoundPage from '../routes/notfound';
+import Events from '../routes/events';
 
 export default class App extends Component {
 
@@ -29,6 +30,7 @@ export default class App extends Component {
 						<Router onChange={this.handleRoute}>
 							<Home path="/" />
 							<Speakers path="/speakers/" />
+							<Events path="/events/" />
 							<Blogs path="/blogs/" />
 							<NotFoundPage type="404" default />
 						</Router>

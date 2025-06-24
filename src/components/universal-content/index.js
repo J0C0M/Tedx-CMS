@@ -4,15 +4,20 @@ import { Link } from 'preact-router';
 import parseMd from 'parse-md';
 import style from './style.css';
 
-// Universal content component that can handle both blogs and speakers
+// Universal content component that can handle blogs, speakers, and events
 const UniversalContent = ({ contentType = 'blog' }) => {
-	const [posts, setPosts] = useState([]);
+	const [allPosts, setAllPosts] = useState([]);
+	const [filteredPosts, setFilteredPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		loadContent();
 	}, [contentType]);
+
+	useEffect(() => {
+		filterPosts();
+	}, [allPosts, contentType]);
 
 	const loadContent = async () => {
 		try {
@@ -22,7 +27,7 @@ const UniversalContent = ({ contentType = 'blog' }) => {
 			// Method 1: Using require.context (webpack specific)
 			try {
 				const context = require.context('../../../content/blog', false, /\.md$/);
-				const allPosts = [];
+				const loadedPosts = [];
 
 				for (const key of context.keys()) {
 					try {
@@ -33,7 +38,7 @@ const UniversalContent = ({ contentType = 'blog' }) => {
 
 						const { metadata, content } = parseMd(markdownContent);
 
-						allPosts.push({
+						loadedPosts.push({
 							slug: key.replace('./', '').replace('.md', ''),
 							...metadata,
 							content,
@@ -45,17 +50,7 @@ const UniversalContent = ({ contentType = 'blog' }) => {
 					}
 				}
 
-				// Filter content based on type using tags
-				const filteredPosts = filterContentByType(allPosts, contentType);
-
-				// Sort posts by date (newest first)
-				filteredPosts.sort((a, b) => {
-					const dateA = new Date(a.date || 0);
-					const dateB = new Date(b.date || 0);
-					return dateB - dateA;
-				});
-
-				setPosts(filteredPosts);
+				setAllPosts(loadedPosts);
 			}
 			catch (contextError) {
 				console.error('require.context failed:', contextError);
@@ -70,25 +65,6 @@ const UniversalContent = ({ contentType = 'blog' }) => {
 			setLoading(false);
 		}
 	};
-
-	const filterContentByType = (posts, type) => posts.filter(post => {
-		if (!post.tags) return type === 'blog'; // Default to blog if no tags
-
-		const tags = typeof post.tags === 'string'
-			? post.tags.split(',').map(t => t.trim().toLowerCase())
-			: post.tags.map(t => t.toLowerCase());
-
-		if (type === 'blog') {
-			// Include posts that don't have 'speaker' tag or explicitly have 'blog' tag
-			return !tags.includes('speaker') || tags.includes('blog');
-		}
-		else if (type === 'speaker') {
-			// Include posts that have 'speaker' tag
-			return tags.includes('speaker');
-		}
-
-		return true;
-	});
 
 	const loadContentManually = async () => {
 		try {
@@ -105,13 +81,57 @@ const UniversalContent = ({ contentType = 'blog' }) => {
 				excerpt: content.substring(0, 200) + (content.length > 200 ? '...' : '')
 			});
 
-			const filteredPosts = filterContentByType(posts, contentType);
-			setPosts(filteredPosts);
+			setAllPosts(posts);
 		}
 		catch (error) {
 			console.error('Manual loading failed:', error);
 			setError(`Failed to load ${contentType} content manually`);
 		}
+	};
+
+	const filterContentByType = (posts, type) => posts.filter(post => {
+		if (!post.tags) return type === 'blog'; // Default to blog if no tags
+
+		const tags = typeof post.tags === 'string'
+			? post.tags.split(',').map(t => t.trim().toLowerCase())
+			: post.tags.map(t => t.toLowerCase());
+
+		if (type === 'blog') {
+			// Include posts that don't have 'speaker' or 'event' tag or explicitly have 'blog' tag
+			return (!tags.includes('speaker') && !tags.includes('event')) || tags.includes('blog');
+		}
+		else if (type === 'speaker') {
+			// Include posts that have 'speaker' tag
+			return tags.includes('speaker');
+		}
+		else if (type === 'event') {
+			// Include posts that have 'event' tag
+			return tags.includes('event');
+		}
+
+		return true;
+	});
+
+	const filterPosts = () => {
+		// Filter by content type only
+		let posts = filterContentByType(allPosts, contentType);
+
+		// Sort posts by date
+		posts.sort((a, b) => {
+			const dateA = new Date(a.date || 0);
+			const dateB = new Date(b.date || 0);
+
+			if (contentType === 'event') {
+				// For events, sort by event date (upcoming first)
+				const eventDateA = new Date(a.event_date || a.date || 0);
+				const eventDateB = new Date(b.event_date || b.date || 0);
+				return eventDateA - eventDateB;
+			}
+
+			return dateB - dateA; // Newest first for blogs and speakers
+		});
+
+		setFilteredPosts(posts);
 	};
 
 	if (loading) {
@@ -134,28 +154,64 @@ const UniversalContent = ({ contentType = 'blog' }) => {
 		);
 	}
 
+	const getPageTitle = () => {
+		switch (contentType) {
+			case 'blog': return 'Blog Posts';
+			case 'speaker': return 'Our Speakers';
+			case 'event': return 'Events';
+			default: return 'Content';
+		}
+	};
+
+	const getPageDescription = () => {
+		switch (contentType) {
+			case 'blog': return 'Latest updates and insights';
+			case 'speaker': return 'Meet the innovative minds sharing their stories at TEDx ROC Nijmegen';
+			case 'event': return 'Upcoming events and past gatherings';
+			default: return '';
+		}
+	};
+
+	const getGridClass = () => {
+		switch (contentType) {
+			case 'blog': return style.postsGrid;
+			case 'speaker': return style.speakersGrid;
+			case 'event': return style.eventsGrid;
+			default: return style.postsGrid;
+		}
+	};
+
+	const getPageClass = () => {
+		switch (contentType) {
+			case 'blog': return style.blogs;
+			case 'speaker': return style.speakersPage;
+			case 'event': return style.eventsPage;
+			default: return style.blogs;
+		}
+	};
+
+	const renderCard = (post) => {
+		switch (contentType) {
+			case 'blog': return <BlogCard key={post.slug} post={post} />;
+			case 'speaker': return <SpeakerCard key={post.slug} speaker={post} />;
+			case 'event': return <EventCard key={post.slug} event={post} />;
+			default: return <BlogCard key={post.slug} post={post} />;
+		}
+	};
+
 	return (
-		<div class={contentType === 'blog' ? style.blogs : style.speakersPage}>
+		<div class={getPageClass()}>
 			<div class={style.container}>
 				<header class={style.header}>
-					<h1>{contentType === 'blog' ? 'Blog Posts' : 'Our Speakers'}</h1>
-					<p>
-						{contentType === 'blog'
-							? 'Latest updates and insights'
-							: 'Meet the innovative minds sharing their stories at TEDx ROC Nijmegen'
-						}
-					</p>
+					<h1>{getPageTitle()}</h1>
+					<p>{getPageDescription()}</p>
 				</header>
 
-				<div class={contentType === 'blog' ? style.postsGrid : style.speakersGrid}>
-					{posts.map((post) => (
-						contentType === 'blog'
-							? <BlogCard key={post.slug} post={post} />
-							: <SpeakerCard key={post.slug} speaker={post} />
-					))}
+				<div class={getGridClass()}>
+					{filteredPosts.map(renderCard)}
 				</div>
 
-				{posts.length === 0 && (
+				{filteredPosts.length === 0 && !loading && (
 					<div class={style.noPosts}>
 						<p>No {contentType}s found.</p>
 						<p>Make sure your markdown files have the correct tags in the metadata.</p>
@@ -166,7 +222,7 @@ const UniversalContent = ({ contentType = 'blog' }) => {
 	);
 };
 
-// Blog card component
+// Blog card component (unchanged)
 const BlogCard = ({ post }) => (
 	<article class={style.postCard}>
 		{post.cover && (
@@ -188,7 +244,10 @@ const BlogCard = ({ post }) => (
 				{post.tags && (
 					<span class={style.tags}>
 						{(typeof post.tags === 'string' ? post.tags.split(',') : post.tags)
-							.filter(tag => tag.trim().toLowerCase() !== 'speaker') // Hide speaker tag in blog view
+							.filter(tag => {
+								const tagLower = tag.trim().toLowerCase();
+								return tagLower !== 'speaker' && tagLower !== 'event';
+							})
 							.map(tag => (
 								<span key={tag.trim()} class={style.tag}>
 									{tag.trim()}
@@ -208,7 +267,7 @@ const BlogCard = ({ post }) => (
 	</article>
 );
 
-// Speaker card component
+// Speaker card component (unchanged)
 const SpeakerCard = ({ speaker }) => (
 	<div class={style.speakerCard}>
 		<div class={style.speakerImage}>
@@ -236,17 +295,17 @@ const SpeakerCard = ({ speaker }) => (
 				<div class={style.speakerSocial}>
 					{speaker.linkedin && (
 						<a href={speaker.linkedin} target="_blank" rel="noopener noreferrer" class={style.socialLink}>
-                            LinkedIn
+							LinkedIn
 						</a>
 					)}
 					{speaker.twitter && (
 						<a href={speaker.twitter} target="_blank" rel="noopener noreferrer" class={style.socialLink}>
-                            Twitter
+							Twitter
 						</a>
 					)}
 					{speaker.website && (
 						<a href={speaker.website} target="_blank" rel="noopener noreferrer" class={style.socialLink}>
-                            Website
+							Website
 						</a>
 					)}
 				</div>
@@ -254,5 +313,74 @@ const SpeakerCard = ({ speaker }) => (
 		</div>
 	</div>
 );
+
+// Event card component with NEW styling
+const EventCard = ({ event }) => {
+	const eventDate = new Date(event.event_date || event.date);
+	const isUpcoming = eventDate > new Date();
+	const isPast = eventDate < new Date();
+
+	return (
+		<article class={`${style.eventCard} ${isUpcoming ? style.upcomingEvent : ''} ${isPast ? style.pastEvent : ''}`}>
+			<div class={style.eventHeader}>
+				<div class={style.eventDate}>
+					{event.event_date && (
+						<time dateTime={event.event_date} class={style.eventDateTime}>
+							<span class={style.eventDay}>
+								{new Date(event.event_date).getDate()}
+							</span>
+							<span class={style.eventMonth}>
+								{new Date(event.event_date).toLocaleDateString('en-US', { month: 'short' })}
+							</span>
+							<span class={style.eventYear}>
+								{new Date(event.event_date).getFullYear()}
+							</span>
+						</time>
+					)}
+				</div>
+				<div class={style.eventStatus}>
+					{isUpcoming && <span class={style.statusBadge}>Upcoming</span>}
+					{isPast && <span class={style.statusBadge}>Past Event</span>}
+				</div>
+			</div>
+
+			{event.cover && (
+				<div class={style.eventImage}>
+					<img src={event.cover} alt={event.title} loading="lazy" />
+				</div>
+			)}
+
+			<div class={style.eventContent}>
+				<h2 class={style.eventTitle}>
+					<Link href={`/events/${event.slug}`}>{event.title}</Link>
+				</h2>
+
+				{event.subtitle && (
+					<p class={style.eventSubtitle}>{event.subtitle}</p>
+				)}
+
+				<p class={style.eventExcerpt}>{event.excerpt}</p>
+
+				{event.tags && (
+					<div class={style.eventTags}>
+						{(typeof event.tags === 'string' ? event.tags.split(',') : event.tags)
+							.filter(tag => tag.trim().toLowerCase() !== 'event')
+							.map(tag => (
+								<span key={tag.trim()} class={style.eventTag}>
+									{tag.trim()}
+								</span>
+							))}
+					</div>
+				)}
+
+				<div class={style.eventFooter}>
+					<Link href={`/events/${event.slug}`} class={style.eventLink}>
+						Learn More
+					</Link>
+				</div>
+			</div>
+		</article>
+	);
+};
 
 export default UniversalContent;
