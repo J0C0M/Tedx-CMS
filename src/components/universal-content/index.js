@@ -127,6 +127,7 @@ const UniversalContent = ({ contentType = 'blog' }) => {
 			<div class={style.container}>
 				<div class={style.error}>
 					<p>{error}</p>
+					{/* eslint-disable-next-line react/jsx-no-bind */}
 					<button onClick={loadContent}>Retry</button>
 				</div>
 			</div>

@@ -18,6 +18,7 @@ export function App() {
 			</div>
 			<h1>Vite + Preact</h1>
 			<div class="card">
+				{/* eslint-disable-next-line react/jsx-no-bind */}
 				<button onClick={() => setCount((count) => count + 1)}>
           count is {count}
 				</button>
