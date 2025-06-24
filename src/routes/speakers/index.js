@@ -1,6 +1,6 @@
-// speakers/index.js
+// speakers/index.jsx
 import { h } from 'preact';
-// In blogs/index.js and speakers/index.js
+// In blogs/index.jsx and speakers/index.jsx
 import UniversalContent from '../../components/universal-content';
 
 const Speakers = () => {
